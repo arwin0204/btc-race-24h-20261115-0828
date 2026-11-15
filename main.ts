@@ -1,4 +1,4 @@
-// btc-race breakout bot (long only, cbBTC/USDC, 1-minute bars). Dev: +$20.94, 6 trades.
+// btc-race breakout bot (long only, cbBTC/USDC, 1-minute bars). Dev: +$23.33, 6 trades.
 //
 // Idea: the dev window trends down ~400 bps, so mean reversion loses and
 // buy-and-hold loses. The money sits in the rare sharp up-legs (e.g. a
@@ -15,8 +15,8 @@
 //   - not within 3 bars of a previous sell (cooldown), not after bar 1350
 //     (leave room to exit before the end-of-window flatten).
 // Exit (whole position, checked every bar):
-//   - trailing stop: position value 0.8% below its peak value since entry,
-//   - hard stop: value 1% below cost,
+//   - trailing stop: position value 0.5% below its peak value since entry (tightened from 0.8%: the tighter trail keeps more of each up-leg before it reverses),
+//   - hard stop: value 0.8% below cost,
 //   - max hold: 60 bars.
 // Sizing: 100% of cash (one open position max, long only). Each order caps
 // slippage at 100 bps past the close it was decided on, like the baselines.
@@ -33,8 +33,8 @@ const SLOW_SPAN = 21;
 const BREAKOUT_BARS = 60;
 const CONFIRM_BARS = 10;
 const CONFIRM_BPS = 50; // 10-bar return must be >= 0.5%
-const TRAIL_BPS = 80; // 0.8% trailing stop, in bps of peak value
-const STOP_BPS = 100; // 1.0% hard stop under cost
+const TRAIL_BPS = 50; // 0.5% trailing stop, in bps of peak value
+const STOP_BPS = 80; // 0.8% hard stop under cost
 const MAX_HOLD_BARS = 60;
 const COOLDOWN_BARS = 3;
 const LATE_CUTOFF_BARS = 1350; // no new entries after this many bars seen
